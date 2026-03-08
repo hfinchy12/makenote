@@ -27,7 +27,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Running `mn` with no existing config automatically launches the setup flow before doing anything else
   3. User can complete `mn config` to set the target GitHub repo, default subject, and subject list, and the result is written to `~/.config/makenote/config.json`
   4. User can add and remove subjects via `mn config` and see the change persist
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Project scaffold (pyproject.toml, package skeleton, test stubs)
+- [ ] 01-02-PLAN.md — CLI entry point (click group, --version, --help, first-run detection)
+- [ ] 01-03-PLAN.md — Config layer (read/write functions and mn config interactive flow)
 
 ### Phase 2: Core Note-Taking
 **Goal**: Users can log notes to GitHub from the terminal using any interaction level, and read recent notes back
@@ -58,6 +63,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scaffold and Config | 0/TBD | Not started | - |
+| 1. Scaffold and Config | 0/3 | Not started | - |
 | 2. Core Note-Taking | 0/TBD | Not started | - |
 | 3. Distribution | 0/TBD | Not started | - |
