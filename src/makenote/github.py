@@ -172,6 +172,9 @@ def read_notes(repo: str, subjects: list[str]) -> list[dict]:
         List of note dicts (with date, subject, note keys), newest first,
         at most 20 records total.
     """
+    if not shutil.which("gh"):
+        raise GhNotInstalledError("gh CLI not found. Install from https://cli.github.com")
+
     records: list[dict] = []
 
     for subject in subjects:
@@ -183,8 +186,12 @@ def read_notes(repo: str, subjects: list[str]) -> list[dict]:
         )
 
         if result.returncode != 0:
-            # Subject file not yet created or other error — skip silently
-            continue
+            stderr = result.stderr.lower()
+            if "not logged in" in stderr or (
+                "auth" in stderr and "404" not in stderr and "not found" not in stderr
+            ):
+                raise GhNotAuthError("gh not authenticated. Run: gh auth login")
+            continue  # 404 or other non-auth error — skip this subject silently
 
         file_data = json.loads(result.stdout)
         content = base64.b64decode(file_data["content"]).decode("utf-8")

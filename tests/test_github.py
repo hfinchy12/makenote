@@ -18,6 +18,7 @@ from makenote.github import (
     GhNotInstalledError,
     ShaConflictError,
     write_note,
+    read_notes,
 )
 
 
@@ -291,3 +292,49 @@ def test_sha_conflict(monkeypatch):
 
     with pytest.raises(ShaConflictError):
         write_note("owner/repo", "work", "note text")
+
+
+# ---------------------------------------------------------------------------
+# GH-04: read_notes() — gh not installed → GhNotInstalledError
+# ---------------------------------------------------------------------------
+
+def test_read_notes_gh_not_installed(monkeypatch):
+    """read_notes() raises GhNotInstalledError when gh is not on PATH."""
+    monkeypatch.setattr("shutil.which", lambda name: None)
+
+    with pytest.raises(GhNotInstalledError):
+        read_notes("owner/repo", ["work"])
+
+
+# ---------------------------------------------------------------------------
+# GH-04: read_notes() — gh not authenticated → GhNotAuthError
+# ---------------------------------------------------------------------------
+
+def test_read_notes_gh_not_authenticated(monkeypatch):
+    """read_notes() raises GhNotAuthError when gh returns auth-related stderr."""
+
+    def fake_run(args, capture_output=False, text=False):
+        return _make_result(returncode=1, stderr="not logged in to any GitHub hosts")
+
+    monkeypatch.setattr("subprocess.run", fake_run)
+    monkeypatch.setattr("shutil.which", lambda name: "/usr/local/bin/gh")
+
+    with pytest.raises(GhNotAuthError):
+        read_notes("owner/repo", ["work"])
+
+
+# ---------------------------------------------------------------------------
+# GH-04: read_notes() — 404 silently skipped (existing behavior preserved)
+# ---------------------------------------------------------------------------
+
+def test_read_notes_404_skipped(monkeypatch):
+    """read_notes() silently skips subjects with 404 file-not-found errors."""
+
+    def fake_run(args, capture_output=False, text=False):
+        return _make_result(returncode=1, stderr="HTTP 404: Not Found")
+
+    monkeypatch.setattr("subprocess.run", fake_run)
+    monkeypatch.setattr("shutil.which", lambda name: "/usr/local/bin/gh")
+
+    result = read_notes("owner/repo", ["work", "personal"])
+    assert result == [], f"Expected empty list for 404, got {result}"
