@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-scaffold-and-config-02-PLAN.md
-last_updated: "2026-03-09T01:58:47.446Z"
+stopped_at: Completed 01-scaffold-and-config-03-PLAN.md
+last_updated: "2026-03-09T02:02:23.925Z"
 last_activity: 2026-03-08 — Roadmap created
 progress:
   total_phases: 3
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-scaffold-and-config P01 | 2 | 2 tasks | 6 files |
 | Phase 01-scaffold-and-config P02 | 2 | 1 tasks | 1 files |
+| Phase 01-scaffold-and-config P03 | 5 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,8 @@ Recent decisions affecting current work:
 - [Phase 01-scaffold-and-config]: All test stubs use xfail(strict=False) so suite stays green before Wave 1/2 implementations
 - [Phase 01-scaffold-and-config]: version_option message format: message='%(prog)s %(version)s' required to output exactly 'mn 0.1.0'
 - [Phase 01-scaffold-and-config]: ctx.invoked_subcommand != 'config' guard prevents double-triggering of run_config_flow when mn config invoked
+- [Phase 01-scaffold-and-config]: cli.py uses module import (as _cfg) instead of direct function imports — enables pytest monkeypatching of config_exists and run_config_flow in test contracts
+- [Phase 01-scaffold-and-config]: Every questionary .ask() return checked for None immediately, calls sys.exit(0) — Ctrl-C exits cleanly with no Python traceback
 
 ### Pending Todos
 
@@ -81,6 +84,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T01:58:47.442Z
-Stopped at: Completed 01-scaffold-and-config-02-PLAN.md
+Last session: 2026-03-09T02:02:23.921Z
+Stopped at: Completed 01-scaffold-and-config-03-PLAN.md
 Resume file: None

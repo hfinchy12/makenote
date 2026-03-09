@@ -12,7 +12,7 @@ MakeNote ships in three phases that follow the dependency topology of the codeba
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Scaffold and Config** - Installable `mn` command, config layer, and `mn config` setup flow
+- [x] **Phase 1: Scaffold and Config** - Installable `mn` command, config layer, and `mn config` setup flow (completed 2026-03-09)
 - [ ] **Phase 2: Core Note-Taking** - GitHub I/O layer and all note commands (`mn`, `mn d`, `mn d "note"`, `mn list`)
 - [ ] **Phase 3: Distribution** - Homebrew tap formula; tool installable from a personal tap
 
@@ -63,6 +63,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scaffold and Config | 2/3 | In Progress|  |
+| 1. Scaffold and Config | 3/3 | Complete   | 2026-03-09 |
 | 2. Core Note-Taking | 0/TBD | Not started | - |
 | 3. Distribution | 0/TBD | Not started | - |
