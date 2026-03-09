@@ -44,7 +44,11 @@ Plans:
   3. Running `mn d` skips the subject picker and prompts only for note text using the configured default subject
   4. Running `mn list` prints the last 10-20 notes across all subjects in human-readable format
   5. When `gh` is not installed or not authenticated, `mn` prints a clear, actionable error message instead of a Python traceback
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — GitHub I/O module (github.py with write_note, read_notes, error classes, tests)
+- [ ] 02-02-PLAN.md — CLI note commands (mn interactive, mn d, mn list wired to github.py, tests)
 
 ### Phase 3: Distribution
 **Goal**: Users can install `mn` via a Homebrew personal tap on a clean machine with no prior Python setup
@@ -64,5 +68,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Scaffold and Config | 3/3 | Complete   | 2026-03-09 |
-| 2. Core Note-Taking | 0/TBD | Not started | - |
+| 2. Core Note-Taking | 0/2 | Not started | - |
 | 3. Distribution | 0/TBD | Not started | - |
