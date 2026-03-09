@@ -37,8 +37,8 @@
 
 ### Distribution
 
-- [ ] **DIST-01**: Tool installable via Homebrew personal tap
-- [ ] **DIST-02**: Homebrew formula declares `gh` as a dependency
+- [x] **DIST-01**: Tool installable via Homebrew personal tap
+- [x] **DIST-02**: Homebrew formula declares `gh` as a dependency
 
 ## v2 Requirements
 
@@ -90,8 +90,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UX-01 | Phase 1 | Complete |
 | UX-02 | Phase 2 | Complete |
 | UX-03 | Phase 2 | Complete |
-| DIST-01 | Phase 3 | Pending |
-| DIST-02 | Phase 3 | Pending |
+| DIST-01 | Phase 3 | Complete |
+| DIST-02 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 20 total

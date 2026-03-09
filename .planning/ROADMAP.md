@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Scaffold and Config** - Installable `mn` command, config layer, and `mn config` setup flow (completed 2026-03-09)
 - [ ] **Phase 2: Core Note-Taking** - GitHub I/O layer and all note commands (`mn`, `mn d`, `mn d "note"`, `mn list`)
-- [ ] **Phase 3: Distribution** - Homebrew tap formula; tool installable from a personal tap
+- [x] **Phase 3: Distribution** - Homebrew tap formula; tool installable from a personal tap (completed 2026-03-09)
 
 ## Phase Details
 
@@ -73,4 +73,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Scaffold and Config | 3/3 | Complete   | 2026-03-09 |
 | 2. Core Note-Taking | 0/3 | Not started | - |
-| 3. Distribution | 0/1 | Not started | - |
+| 3. Distribution | 1/1 | Complete   | 2026-03-09 |

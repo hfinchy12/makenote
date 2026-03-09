@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-09T15:30:38.687Z"
+stopped_at: "Checkpoint: Awaiting human verification of Formula/makenote.rb and RELEASING.md (03-01 Task 3)"
+last_updated: "2026-03-09T16:34:05.261Z"
 last_activity: 2026-03-08 — Roadmap created
 progress:
   total_phases: 3
-  completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
+  completed_phases: 3
+  total_plans: 7
+  completed_plans: 7
   percent: 0
 ---
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-core-note-taking P01 | 1 | 2 tasks | 2 files |
 | Phase 02-core-note-taking P02 | 2 | 2 tasks | 2 files |
 | Phase 02-core-note-taking P03 | 2 | 2 tasks | 4 files |
+| Phase 03-distribution P01 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,9 @@ Recent decisions affecting current work:
 - [Phase 02-core-note-taking]: Add New placed first in choices list before Separator in subject picker
 - [Phase 02-core-note-taking]: read_notes() shutil.which guard placed before the for-loop — one check covers all subjects
 - [Phase 02-core-note-taking]: ShaConflictError included in list_notes() try/except for completeness matching mn/mn d pattern
+- [Phase 03-distribution]: Formula sha256 left as PLACEHOLDER — v0.1.0 tarball not yet published; correct for development formula
+- [Phase 03-distribution]: Resource stanzas left as PLACEHOLDER — brew update-python-resources requires formula inside tap directory; workaround documented in RELEASING.md
+- [Phase 03-distribution]: depends_on gh declared (DIST-02) — gh installed automatically via Homebrew dependency
 
 ### Pending Todos
 
@@ -94,6 +98,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T15:30:38.683Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-distribution/03-CONTEXT.md
+Last session: 2026-03-09T16:34:05.257Z
+Stopped at: Checkpoint: Awaiting human verification of Formula/makenote.rb and RELEASING.md (03-01 Task 3)
+Resume file: None
