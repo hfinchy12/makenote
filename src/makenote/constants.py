@@ -1,0 +1,3 @@
+from pathlib import Path
+
+CONFIG_PATH = Path.home() / ".config" / "makenote" / "config.json"
