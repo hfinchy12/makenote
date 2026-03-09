@@ -1,5 +1,5 @@
 import click
-from makenote.config import config_exists, run_config_flow
+import makenote.config as _cfg
 
 
 @click.group(invoke_without_command=True)
@@ -7,9 +7,9 @@ from makenote.config import config_exists, run_config_flow
 @click.pass_context
 def main(ctx: click.Context) -> None:
     """mn — fast terminal note logging."""
-    if not config_exists() and ctx.invoked_subcommand != "config":
+    if not _cfg.config_exists() and ctx.invoked_subcommand != "config":
         click.echo("No config found. Running first-time setup.")
-        run_config_flow()
+        _cfg.run_config_flow()
     elif ctx.invoked_subcommand is None:
         click.echo(ctx.get_help())
 
@@ -17,4 +17,4 @@ def main(ctx: click.Context) -> None:
 @main.command()
 def config() -> None:
     """Edit configuration."""
-    run_config_flow()
+    _cfg.run_config_flow()

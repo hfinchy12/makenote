@@ -23,3 +23,69 @@ def save_config(data: dict) -> None:
     CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
     with CONFIG_PATH.open("w") as f:
         json.dump(data, f, indent=2)
+
+
+def run_config_flow(existing: dict | None = None) -> None:
+    """Interactive config editor. Loops until user selects Save and exit."""
+    data = existing.copy() if existing else {"repo": "", "default_subject": "", "subjects": []}
+
+    # Pre-load existing config if it exists and no data passed in
+    if existing is None and config_exists():
+        data = load_config()
+
+    while True:
+        action = questionary.select(
+            "Configure makenote:",
+            choices=[
+                "Set GitHub repo",
+                "Set default subject",
+                questionary.Separator(),
+                "Add subject",
+                "Remove subject",
+                questionary.Separator(),
+                "Save and exit",
+            ],
+        ).ask()
+
+        if action is None:  # Ctrl-C: exit cleanly, no traceback
+            sys.exit(0)
+
+        if action == "Set GitHub repo":
+            repo = questionary.text("GitHub repo (owner/repo):").ask()
+            if repo is None:
+                sys.exit(0)
+            data["repo"] = repo.strip()
+
+        elif action == "Set default subject":
+            if not data["subjects"]:
+                click.echo("Error: add at least one subject first.")
+                continue
+            subject = questionary.select(
+                "Default subject:", choices=data["subjects"]
+            ).ask()
+            if subject is None:
+                sys.exit(0)
+            data["default_subject"] = subject
+
+        elif action == "Add subject":
+            name = questionary.text("New subject name:").ask()
+            if name is None:
+                sys.exit(0)
+            name = name.strip()
+            if name and name not in data["subjects"]:
+                data["subjects"].append(name)
+
+        elif action == "Remove subject":
+            if not data["subjects"]:
+                click.echo("Error: no subjects to remove.")
+                continue
+            to_remove = questionary.select(
+                "Remove which subject?", choices=data["subjects"]
+            ).ask()
+            if to_remove is None:
+                sys.exit(0)
+            data["subjects"].remove(to_remove)
+
+        elif action == "Save and exit":
+            save_config(data)
+            break
