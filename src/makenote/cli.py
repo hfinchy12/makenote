@@ -86,7 +86,17 @@ def default_note(note_text: str | None) -> None:
 def list_notes() -> None:
     """Print recent notes across all subjects."""
     cfg = _cfg.load_config()
-    records = _gh.read_notes(cfg["repo"], cfg.get("subjects", []))
+    try:
+        records = _gh.read_notes(cfg["repo"], cfg.get("subjects", []))
+    except _gh.GhNotInstalledError:
+        click.echo("Error: gh CLI not found. Install from https://cli.github.com")
+        sys.exit(1)
+    except _gh.GhNotAuthError:
+        click.echo("Error: gh not authenticated. Run: gh auth login")
+        sys.exit(1)
+    except _gh.ShaConflictError:
+        click.echo("Error: write conflict — file may have changed. Try again.")
+        sys.exit(1)
     if not records:
         click.echo("No notes found.")
         return

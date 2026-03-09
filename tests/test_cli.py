@@ -236,6 +236,44 @@ def test_mn_list(tmp_path, monkeypatch):
     assert "went for a run" in result.output
 
 
+def test_mn_list_gh_not_installed(tmp_path, monkeypatch):
+    """mn list with GhNotInstalledError prints locked message and exits 1."""
+    from makenote.cli import main
+
+    config_path = _make_config(tmp_path)
+    monkeypatch.setattr("makenote.config.CONFIG_PATH", config_path)
+    monkeypatch.setattr(
+        "makenote.cli._gh.read_notes",
+        lambda *a, **kw: (_ for _ in ()).throw(GhNotInstalledError("gh not found")),
+    )
+
+    runner = CliRunner(mix_stderr=False)
+    result = runner.invoke(main, ["list"])
+
+    assert result.exit_code == 1
+    assert "Error: gh CLI not found" in result.output
+    assert "https://cli.github.com" in result.output
+
+
+def test_mn_list_gh_not_authenticated(tmp_path, monkeypatch):
+    """mn list with GhNotAuthError prints locked message and exits 1."""
+    from makenote.cli import main
+
+    config_path = _make_config(tmp_path)
+    monkeypatch.setattr("makenote.config.CONFIG_PATH", config_path)
+    monkeypatch.setattr(
+        "makenote.cli._gh.read_notes",
+        lambda *a, **kw: (_ for _ in ()).throw(GhNotAuthError("not authenticated")),
+    )
+
+    runner = CliRunner(mix_stderr=False)
+    result = runner.invoke(main, ["list"])
+
+    assert result.exit_code == 1
+    assert "Error: gh not authenticated" in result.output
+    assert "gh auth login" in result.output
+
+
 def test_mn_gh_not_installed(tmp_path, monkeypatch):
     """mn d with GhNotInstalledError prints correct locked message and exits 1."""
     from makenote.cli import main
