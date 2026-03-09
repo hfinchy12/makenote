@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-03-08T16:56:50.727Z"
+stopped_at: Completed 01-scaffold-and-config-01-PLAN.md
+last_updated: "2026-03-09T01:56:07.982Z"
 last_activity: 2026-03-08 — Roadmap created
 progress:
   total_phases: 3
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 1
   percent: 0
 ---
 
@@ -50,6 +50,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01-scaffold-and-config P01 | 2 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -62,6 +63,9 @@ Recent decisions affecting current work:
 - `gh` CLI over GitHub API directly — no credential management needed
 - Direct API write (no clone) — faster, no local repo state
 - `questionary` for TUI — lightweight arrow-key support
+- [Phase 01-scaffold-and-config]: Lowered requires-python to >=3.9 — system Python is 3.9.6, no 3.10-specific syntax used
+- [Phase 01-scaffold-and-config]: Used Path.home() for CONFIG_PATH portability
+- [Phase 01-scaffold-and-config]: All test stubs use xfail(strict=False) so suite stays green before Wave 1/2 implementations
 
 ### Pending Todos
 
@@ -74,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T16:56:50.721Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-scaffold-and-config/01-CONTEXT.md
+Last session: 2026-03-09T01:56:07.978Z
+Stopped at: Completed 01-scaffold-and-config-01-PLAN.md
+Resume file: None

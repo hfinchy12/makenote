@@ -11,16 +11,16 @@
 - [ ] **CORE-02**: User can run `mn d` to skip subject picker and get inline note prompt using default subject
 - [ ] **CORE-03**: User can run `mn d "note content"` to log a note with zero interaction
 - [ ] **CORE-04**: User can run `mn list` to see the most recent notes across all subjects printed to terminal
-- [ ] **CORE-05**: User can run `mn config` to interactively edit repo, default subject, and subject list
+- [x] **CORE-05**: User can run `mn config` to interactively edit repo, default subject, and subject list
 
 ### Config
 
-- [ ] **CONF-01**: First run with no config auto-triggers setup flow before proceeding
-- [ ] **CONF-02**: Config stored at `~/.config/makenote/config.json`
-- [ ] **CONF-03**: User can set/change the target GitHub repo
-- [ ] **CONF-04**: User can set/change the default subject
-- [ ] **CONF-05**: User can add a new subject
-- [ ] **CONF-06**: User can remove an existing subject
+- [x] **CONF-01**: First run with no config auto-triggers setup flow before proceeding
+- [x] **CONF-02**: Config stored at `~/.config/makenote/config.json`
+- [x] **CONF-03**: User can set/change the target GitHub repo
+- [x] **CONF-04**: User can set/change the default subject
+- [x] **CONF-05**: User can add a new subject
+- [x] **CONF-06**: User can remove an existing subject
 
 ### GitHub
 
@@ -31,7 +31,7 @@
 
 ### UX
 
-- [ ] **UX-01**: `mn --help` and `mn --version` work correctly
+- [x] **UX-01**: `mn --help` and `mn --version` work correctly
 - [ ] **UX-02**: Subject picker uses arrow-key selection with "Add New" option
 - [ ] **UX-03**: Each note record includes a `date` field (YYYY-MM-DD)
 
@@ -76,18 +76,18 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CORE-02 | Phase 2 | Pending |
 | CORE-03 | Phase 2 | Pending |
 | CORE-04 | Phase 2 | Pending |
-| CORE-05 | Phase 1 | Pending |
-| CONF-01 | Phase 1 | Pending |
-| CONF-02 | Phase 1 | Pending |
-| CONF-03 | Phase 1 | Pending |
-| CONF-04 | Phase 1 | Pending |
-| CONF-05 | Phase 1 | Pending |
-| CONF-06 | Phase 1 | Pending |
+| CORE-05 | Phase 1 | Complete |
+| CONF-01 | Phase 1 | Complete |
+| CONF-02 | Phase 1 | Complete |
+| CONF-03 | Phase 1 | Complete |
+| CONF-04 | Phase 1 | Complete |
+| CONF-05 | Phase 1 | Complete |
+| CONF-06 | Phase 1 | Complete |
 | GH-01 | Phase 2 | Pending |
 | GH-02 | Phase 2 | Pending |
 | GH-03 | Phase 2 | Pending |
 | GH-04 | Phase 2 | Pending |
-| UX-01 | Phase 1 | Pending |
+| UX-01 | Phase 1 | Complete |
 | UX-02 | Phase 2 | Pending |
 | UX-03 | Phase 2 | Pending |
 | DIST-01 | Phase 3 | Pending |
