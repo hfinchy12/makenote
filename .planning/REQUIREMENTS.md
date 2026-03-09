@@ -24,16 +24,16 @@
 
 ### GitHub
 
-- [ ] **GH-01**: Notes written via `gh api` — read current SHA → append record → update file
-- [ ] **GH-02**: Notes stored as JSONL with `date`, `subject`, `note` fields per record
-- [ ] **GH-03**: One `notes.jsonl` per subject folder, under configurable `target_path` in the repo
-- [ ] **GH-04**: Clear error message when `gh` is not installed or not authenticated
+- [x] **GH-01**: Notes written via `gh api` — read current SHA → append record → update file
+- [x] **GH-02**: Notes stored as JSONL with `date`, `subject`, `note` fields per record
+- [x] **GH-03**: One `notes.jsonl` per subject folder, under configurable `target_path` in the repo
+- [x] **GH-04**: Clear error message when `gh` is not installed or not authenticated
 
 ### UX
 
 - [x] **UX-01**: `mn --help` and `mn --version` work correctly
 - [ ] **UX-02**: Subject picker uses arrow-key selection with "Add New" option
-- [ ] **UX-03**: Each note record includes a `date` field (YYYY-MM-DD)
+- [x] **UX-03**: Each note record includes a `date` field (YYYY-MM-DD)
 
 ### Distribution
 
@@ -83,13 +83,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONF-04 | Phase 1 | Complete |
 | CONF-05 | Phase 1 | Complete |
 | CONF-06 | Phase 1 | Complete |
-| GH-01 | Phase 2 | Pending |
-| GH-02 | Phase 2 | Pending |
-| GH-03 | Phase 2 | Pending |
-| GH-04 | Phase 2 | Pending |
+| GH-01 | Phase 2 | Complete |
+| GH-02 | Phase 2 | Complete |
+| GH-03 | Phase 2 | Complete |
+| GH-04 | Phase 2 | Complete |
 | UX-01 | Phase 1 | Complete |
 | UX-02 | Phase 2 | Pending |
-| UX-03 | Phase 2 | Pending |
+| UX-03 | Phase 2 | Complete |
 | DIST-01 | Phase 3 | Pending |
 | DIST-02 | Phase 3 | Pending |
 

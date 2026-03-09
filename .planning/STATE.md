@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-09T02:14:36.169Z"
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-09T02:31:11.623Z"
 last_activity: 2026-03-08 — Roadmap created
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
   percent: 0
 ---
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-scaffold-and-config P01 | 2 | 2 tasks | 6 files |
 | Phase 01-scaffold-and-config P02 | 2 | 1 tasks | 1 files |
 | Phase 01-scaffold-and-config P03 | 5 | 2 tasks | 2 files |
+| Phase 02-core-note-taking P01 | 1 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,8 @@ Recent decisions affecting current work:
 - [Phase 01-scaffold-and-config]: ctx.invoked_subcommand != 'config' guard prevents double-triggering of run_config_flow when mn config invoked
 - [Phase 01-scaffold-and-config]: cli.py uses module import (as _cfg) instead of direct function imports — enables pytest monkeypatching of config_exists and run_config_flow in test contracts
 - [Phase 01-scaffold-and-config]: Every questionary .ask() return checked for None immediately, calls sys.exit(0) — Ctrl-C exits cleanly with no Python traceback
+- [Phase 02-core-note-taking]: write_note() uses direct subprocess.run for GET (not _run_gh) because 404 is normal/expected when file does not exist
+- [Phase 02-core-note-taking]: NOTES_ROOT = 'notes' as module constant in github.py — promotes to config field in future phase without inline hardcoding
 
 ### Pending Todos
 
@@ -84,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T02:14:36.163Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-core-note-taking/02-CONTEXT.md
+Last session: 2026-03-09T02:31:11.619Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
