@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-09T02:31:11.623Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-03-09T02:35:24.382Z"
 last_activity: 2026-03-08 — Roadmap created
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-scaffold-and-config P02 | 2 | 1 tasks | 1 files |
 | Phase 01-scaffold-and-config P03 | 5 | 2 tasks | 2 files |
 | Phase 02-core-note-taking P01 | 1 | 2 tasks | 2 files |
+| Phase 02-core-note-taking P02 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,9 @@ Recent decisions affecting current work:
 - [Phase 01-scaffold-and-config]: Every questionary .ask() return checked for None immediately, calls sys.exit(0) — Ctrl-C exits cleanly with no Python traceback
 - [Phase 02-core-note-taking]: write_note() uses direct subprocess.run for GET (not _run_gh) because 404 is normal/expected when file does not exist
 - [Phase 02-core-note-taking]: NOTES_ROOT = 'notes' as module constant in github.py — promotes to config field in future phase without inline hardcoding
+- [Phase 02-core-note-taking]: from __future__ import annotations added to cli.py for Python 3.9 compatibility with str | None type hints
+- [Phase 02-core-note-taking]: Questionary mocked at makenote.cli.questionary level (not module directly) because cli.py uses module-level import
+- [Phase 02-core-note-taking]: Add New placed first in choices list before Separator in subject picker
 
 ### Pending Todos
 
@@ -87,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T02:31:11.619Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-03-09T02:35:24.378Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None

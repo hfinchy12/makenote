@@ -7,10 +7,10 @@
 
 ### Core Commands
 
-- [ ] **CORE-01**: User can run `mn` to get arrow-key subject picker → inline note input → note pushed to GitHub
-- [ ] **CORE-02**: User can run `mn d` to skip subject picker and get inline note prompt using default subject
-- [ ] **CORE-03**: User can run `mn d "note content"` to log a note with zero interaction
-- [ ] **CORE-04**: User can run `mn list` to see the most recent notes across all subjects printed to terminal
+- [x] **CORE-01**: User can run `mn` to get arrow-key subject picker → inline note input → note pushed to GitHub
+- [x] **CORE-02**: User can run `mn d` to skip subject picker and get inline note prompt using default subject
+- [x] **CORE-03**: User can run `mn d "note content"` to log a note with zero interaction
+- [x] **CORE-04**: User can run `mn list` to see the most recent notes across all subjects printed to terminal
 - [x] **CORE-05**: User can run `mn config` to interactively edit repo, default subject, and subject list
 
 ### Config
@@ -32,7 +32,7 @@
 ### UX
 
 - [x] **UX-01**: `mn --help` and `mn --version` work correctly
-- [ ] **UX-02**: Subject picker uses arrow-key selection with "Add New" option
+- [x] **UX-02**: Subject picker uses arrow-key selection with "Add New" option
 - [x] **UX-03**: Each note record includes a `date` field (YYYY-MM-DD)
 
 ### Distribution
@@ -72,10 +72,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORE-01 | Phase 2 | Pending |
-| CORE-02 | Phase 2 | Pending |
-| CORE-03 | Phase 2 | Pending |
-| CORE-04 | Phase 2 | Pending |
+| CORE-01 | Phase 2 | Complete |
+| CORE-02 | Phase 2 | Complete |
+| CORE-03 | Phase 2 | Complete |
+| CORE-04 | Phase 2 | Complete |
 | CORE-05 | Phase 1 | Complete |
 | CONF-01 | Phase 1 | Complete |
 | CONF-02 | Phase 1 | Complete |
@@ -88,7 +88,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GH-03 | Phase 2 | Complete |
 | GH-04 | Phase 2 | Complete |
 | UX-01 | Phase 1 | Complete |
-| UX-02 | Phase 2 | Pending |
+| UX-02 | Phase 2 | Complete |
 | UX-03 | Phase 2 | Complete |
 | DIST-01 | Phase 3 | Pending |
 | DIST-02 | Phase 3 | Pending |
