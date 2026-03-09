@@ -1,0 +1,20 @@
+# Python build artifacts
+*.egg-info/
+*.egg
+dist/
+build/
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Testing
+.coverage
+htmlcov/
+
+# Misc
+.DS_Store
+*.log
