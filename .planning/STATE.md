@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-scaffold-and-config-01-PLAN.md
-last_updated: "2026-03-09T01:56:07.982Z"
+stopped_at: Completed 01-scaffold-and-config-02-PLAN.md
+last_updated: "2026-03-09T01:58:47.446Z"
 last_activity: 2026-03-08 — Roadmap created
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -51,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-scaffold-and-config P01 | 2 | 2 tasks | 6 files |
+| Phase 01-scaffold-and-config P02 | 2 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,8 @@ Recent decisions affecting current work:
 - [Phase 01-scaffold-and-config]: Lowered requires-python to >=3.9 — system Python is 3.9.6, no 3.10-specific syntax used
 - [Phase 01-scaffold-and-config]: Used Path.home() for CONFIG_PATH portability
 - [Phase 01-scaffold-and-config]: All test stubs use xfail(strict=False) so suite stays green before Wave 1/2 implementations
+- [Phase 01-scaffold-and-config]: version_option message format: message='%(prog)s %(version)s' required to output exactly 'mn 0.1.0'
+- [Phase 01-scaffold-and-config]: ctx.invoked_subcommand != 'config' guard prevents double-triggering of run_config_flow when mn config invoked
 
 ### Pending Todos
 
@@ -78,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T01:56:07.978Z
-Stopped at: Completed 01-scaffold-and-config-01-PLAN.md
+Last session: 2026-03-09T01:58:47.442Z
+Stopped at: Completed 01-scaffold-and-config-02-PLAN.md
 Resume file: None
