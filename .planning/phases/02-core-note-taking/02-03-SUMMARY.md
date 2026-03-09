@@ -100,6 +100,10 @@ None.
 ## User Setup Required
 None - no external service configuration required.
 
+## Self-Check: PASSED
+
+All files verified present. All task commits verified (5ec93a6, 04393ce).
+
 ## Next Phase Readiness
 - All three note commands (mn, mn d, mn list) now behave identically for gh-absent and unauthenticated states
 - Verification truths 9 and 10 from 02-VERIFICATION.md are now satisfied
