@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-03-09T02:35:24.382Z"
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-03-09T15:19:03.917Z"
 last_activity: 2026-03-08 — Roadmap created
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 6
+  completed_plans: 6
   percent: 0
 ---
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-scaffold-and-config P03 | 5 | 2 tasks | 2 files |
 | Phase 02-core-note-taking P01 | 1 | 2 tasks | 2 files |
 | Phase 02-core-note-taking P02 | 2 | 2 tasks | 2 files |
+| Phase 02-core-note-taking P03 | 2 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,8 @@ Recent decisions affecting current work:
 - [Phase 02-core-note-taking]: from __future__ import annotations added to cli.py for Python 3.9 compatibility with str | None type hints
 - [Phase 02-core-note-taking]: Questionary mocked at makenote.cli.questionary level (not module directly) because cli.py uses module-level import
 - [Phase 02-core-note-taking]: Add New placed first in choices list before Separator in subject picker
+- [Phase 02-core-note-taking]: read_notes() shutil.which guard placed before the for-loop — one check covers all subjects
+- [Phase 02-core-note-taking]: ShaConflictError included in list_notes() try/except for completeness matching mn/mn d pattern
 
 ### Pending Todos
 
@@ -91,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T02:35:24.378Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-03-09T15:19:03.914Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None
