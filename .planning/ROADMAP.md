@@ -59,7 +59,10 @@ Plans:
   1. `brew install <tap>/makenote` succeeds on a clean macOS environment with no pre-installed Python
   2. The Homebrew formula declares `gh` as a dependency so it is installed automatically if absent
   3. After Homebrew install, `mn --version` runs correctly and all note commands work end-to-end
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 03-01-PLAN.md — Homebrew formula and release checklist (Formula/makenote.rb, RELEASING.md)
 
 ## Progress
 
@@ -70,4 +73,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Scaffold and Config | 3/3 | Complete   | 2026-03-09 |
 | 2. Core Note-Taking | 0/3 | Not started | - |
-| 3. Distribution | 0/TBD | Not started | - |
+| 3. Distribution | 0/1 | Not started | - |
