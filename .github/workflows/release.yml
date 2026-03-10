@@ -1,0 +1,103 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release (e.g. 1.0.0)"
+        required: true
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Update version in pyproject.toml
+        run: |
+          sed -i '' "s/^version = .*/version = \"${{ github.event.inputs.version }}\"/" pyproject.toml
+
+      - name: Commit and tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: bump version to ${{ github.event.inputs.version }}"
+          git tag "v${{ github.event.inputs.version }}"
+          git push origin main
+          git push origin "v${{ github.event.inputs.version }}"
+
+      - name: Wait for tarball
+        run: sleep 15
+
+      - name: Compute SHA256
+        id: sha
+        run: |
+          SHA=$(curl -sL "https://github.com/hfinchy12/make-note/archive/refs/tags/v${{ github.event.inputs.version }}.tar.gz" \
+            | shasum -a 256 | awk '{ print $1 }')
+          echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Install Homebrew tools
+        run: brew install python@3.12
+
+      - name: Update formula url and sha256
+        run: |
+          sed -i '' "s|url \".*\"|url \"https://github.com/hfinchy12/make-note/archive/refs/tags/v${{ github.event.inputs.version }}.tar.gz\"|" Formula/makenote.rb
+          sed -i '' "s|sha256 \".*\"|sha256 \"${{ steps.sha.outputs.sha256 }}\"|" Formula/makenote.rb
+
+      - name: Tap and copy formula for resource update
+        run: |
+          brew tap hfinchy12/tap https://github.com/hfinchy12/homebrew-tap
+          mkdir -p $(brew --prefix)/Library/Taps/hfinchy12/homebrew-tap/Formula
+          cp Formula/makenote.rb $(brew --prefix)/Library/Taps/hfinchy12/homebrew-tap/Formula/makenote.rb
+
+      - name: Regenerate resource stanzas
+        run: |
+          RESOURCES=$(brew update-python-resources --print-only hfinchy12/tap/makenote)
+          python3 - <<'EOF'
+          import re, subprocess, sys
+
+          formula_path = "Formula/makenote.rb"
+          with open(formula_path) as f:
+              content = f.read()
+
+          result = subprocess.run(
+              ["brew", "update-python-resources", "--print-only", "hfinchy12/tap/makenote"],
+              capture_output=True, text=True
+          )
+          resources = result.stdout.strip()
+
+          # Replace everything between the first `resource` block and `def install`
+          new_content = re.sub(
+              r'(  resource.*?)(\n  def install)',
+              resources + r'\2',
+              content,
+              flags=re.DOTALL
+          )
+          with open(formula_path, "w") as f:
+              f.write(new_content)
+          EOF
+
+      - name: Push updated formula to tap repo
+        uses: actions/checkout@v4
+        with:
+          repository: hfinchy12/homebrew-tap
+          token: ${{ secrets.RELEASE_TOKEN }}
+          path: homebrew-tap
+
+      - name: Copy formula and push
+        run: |
+          mkdir -p homebrew-tap/Formula
+          cp Formula/makenote.rb homebrew-tap/Formula/makenote.rb
+          cd homebrew-tap
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/makenote.rb
+          git commit -m "makenote v${{ github.event.inputs.version }}"
+          git push origin main

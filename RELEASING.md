@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Homebrew installed locally
-- `hunterfinch/homebrew-tap` GitHub repo exists (create it at github.com/new with name `homebrew-tap` if not already done)
+- `hfinchy12/homebrew-tap` GitHub repo exists (create it at github.com/new with name `homebrew-tap` if not already done)
 - All Phase 2 features verified working end-to-end
 
 ## Release Steps
@@ -24,7 +24,7 @@
 
 4. Wait ~30 seconds for GitHub to make the tarball available, then compute the SHA256:
    ```bash
-   curl -sL "https://github.com/hunterfinch/make-note/archive/refs/tags/vX.Y.Z.tar.gz" \
+   curl -sL "https://github.com/hfinchy12/make-note/archive/refs/tags/vX.Y.Z.tar.gz" \
      | shasum -a 256 | awk '{ print $1 }'
    ```
 
@@ -40,9 +40,9 @@
 
    Note: This command requires the formula to be inside a tap. If running it locally, temporarily copy the formula into your local tap directory first:
    ```bash
-   brew tap hunterfinch/tap
-   cp Formula/makenote.rb $(brew --prefix)/Library/Taps/hunterfinch/homebrew-tap/Formula/makenote.rb
-   brew update-python-resources --print-only hunterfinch/tap/makenote
+   brew tap hfinchy12/tap
+   cp Formula/makenote.rb $(brew --prefix)/Library/Taps/hfinchy12/homebrew-tap/Formula/makenote.rb
+   brew update-python-resources --print-only hfinchy12/tap/makenote
    ```
 
 7. Verify the formula locally:
@@ -68,7 +68,7 @@
 
 10. Verify the user install path works:
     ```bash
-    brew tap hunterfinch/tap
+    brew tap hfinchy12/tap
     brew install makenote
     mn --version
     ```
@@ -84,5 +84,5 @@
 ## Formula Location
 
 - **Source of truth:** `Formula/makenote.rb` in this repo (make-note)
-- **Published copy:** `Formula/makenote.rb` in `hunterfinch/homebrew-tap`
+- **Published copy:** `Formula/makenote.rb` in `hfinchy12/homebrew-tap`
 - Always update the source-of-truth file first, then copy to the tap repo

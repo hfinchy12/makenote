@@ -2,12 +2,12 @@ class Makenote < Formula
   include Language::Python::Virtualenv
 
   desc "Fast terminal note logging to GitHub"
-  homepage "https://github.com/hunterfinch/make-note"
-  url "https://github.com/hunterfinch/make-note/archive/refs/tags/v0.1.0.tar.gz"
+  homepage "https://github.com/hfinchy12/make-note"
+  url "https://github.com/hfinchy12/make-note/archive/refs/tags/v1.0.0.tar.gz"
   # PLACEHOLDER — compute real hash at release time:
-  #   curl -sL "https://github.com/hunterfinch/make-note/archive/refs/tags/v0.1.0.tar.gz" \
+  #   curl -sL "https://github.com/hfinchy12/make-note/archive/refs/tags/v0.1.0.tar.gz" \
   #     | shasum -a 256 | awk '{ print $1 }'
-  sha256 "PLACEHOLDER_COMPUTE_BEFORE_PUBLISHING"
+  sha256 "caef169323e9d291ac7e8067293ecfe49515a9e0c0ad7e7f2a2fb163db35a971"
   license "MIT"
 
   depends_on "python@3.12"
@@ -17,23 +17,23 @@ class Makenote < Formula
   #   brew update-python-resources --print-only Formula/makenote.rb
   # Run that command after updating url/sha256 above to refresh these hashes.
   resource "click" do
-    url "PLACEHOLDER"
-    sha256 "PLACEHOLDER"
-  end
-
-  resource "questionary" do
-    url "PLACEHOLDER"
-    sha256 "PLACEHOLDER"
+    url "https://files.pythonhosted.org/packages/3d/fa/656b739db8587d7b5dfa22e22ed02566950fbfbcdc20311993483657a5c0/click-8.3.1.tar.gz"
+    sha256 "12ff4785d337a1bb490bb7e9c2b1ee5da3112e94a8622f26a6c77f5d2fc6842a"
   end
 
   resource "prompt-toolkit" do
-    url "PLACEHOLDER"
-    sha256 "PLACEHOLDER"
+    url "https://files.pythonhosted.org/packages/a1/96/06e01a7b38dce6fe1db213e061a4602dd6032a8a97ef6c1a862537732421/prompt_toolkit-3.0.52.tar.gz"
+    sha256 "28cde192929c8e7321de85de1ddbe736f1375148b02f2e17edd840042b1be855"
+  end
+
+  resource "questionary" do
+    url "https://files.pythonhosted.org/packages/f6/45/eafb0bba0f9988f6a2520f9ca2df2c82ddfa8d67c95d6625452e97b204a5/questionary-2.1.1.tar.gz"
+    sha256 "3d7e980292bb0107abaa79c68dd3eee3c561b83a0f89ae482860b181c8bd412d"
   end
 
   resource "wcwidth" do
-    url "PLACEHOLDER"
-    sha256 "PLACEHOLDER"
+    url "https://files.pythonhosted.org/packages/35/a2/8e3becb46433538a38726c948d3399905a4c7cabd0df578ede5dc51f0ec2/wcwidth-0.6.0.tar.gz"
+    sha256 "cdc4e4262d6ef9a1a57e018384cbeb1208d8abbc64176027e2c2455c81313159"
   end
 
   def install
