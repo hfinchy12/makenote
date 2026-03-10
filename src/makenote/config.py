@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sys
+import time
 from pathlib import Path
 
 import click
@@ -72,6 +73,7 @@ def run_config_flow(existing: dict | None = None) -> None:
                 questionary.Separator(),
                 "Add subject",
                 "Remove subject",
+                "List subjects",
                 questionary.Separator(),
                 "Save and exit",
             ],
@@ -90,6 +92,7 @@ def run_config_flow(existing: dict | None = None) -> None:
         elif action == "Set default subject":
             if not data["subjects"]:
                 click.echo("Error: add at least one subject first.")
+                click.echo("")
                 continue
             subject = questionary.select(
                 "Default subject:", choices=data["subjects"]
@@ -106,9 +109,17 @@ def run_config_flow(existing: dict | None = None) -> None:
             if name and name not in data["subjects"]:
                 data["subjects"].append(name)
 
+        elif action == "List subjects":
+            if not data["subjects"]:
+                click.echo("No subjects configured.")
+            else:
+                click.echo("\n".join(data["subjects"]))
+            time.sleep(0.4)
+
         elif action == "Remove subject":
             if not data["subjects"]:
                 click.echo("Error: no subjects to remove.")
+                click.echo("")
                 continue
             to_remove = questionary.select(
                 "Remove which subject?", choices=data["subjects"]
@@ -120,3 +131,5 @@ def run_config_flow(existing: dict | None = None) -> None:
         elif action == "Save and exit":
             save_config(data)
             break
+
+        click.echo("")
