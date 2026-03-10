@@ -156,6 +156,42 @@ def write_note(repo: str, subject: str, note_text: str) -> None:
         raise GhApiError(stderr.strip())
 
 
+def list_subjects(repo: str) -> list[str]:
+    """
+    Return the list of subject names found under notes/ in the given repo.
+
+    Calls the GitHub Contents API for the notes/ directory. Returns an empty
+    list if the directory doesn't exist. Raises GhNotInstalledError or
+    GhNotAuthError on the appropriate failures.
+
+    Args:
+        repo: GitHub repo in "owner/repo" format.
+
+    Returns:
+        Sorted list of subject directory names.
+    """
+    if not shutil.which("gh"):
+        raise GhNotInstalledError("gh CLI not found. Install from https://cli.github.com")
+
+    result = subprocess.run(
+        ["gh", "api", f"repos/{repo}/contents/{NOTES_ROOT}"],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
+        stderr = result.stderr.lower()
+        if "not logged in" in stderr or (
+            "auth" in stderr and "404" not in stderr and "not found" not in stderr
+        ):
+            raise GhNotAuthError("gh not authenticated. Run: gh auth login")
+        # notes/ directory doesn't exist or other non-auth error
+        return []
+
+    entries = json.loads(result.stdout)
+    return sorted(e["name"] for e in entries if e.get("type") == "dir")
+
+
 def read_notes(repo: str, subjects: list[str]) -> list[dict]:
     """
     Fetch and return recent notes across all given subjects.

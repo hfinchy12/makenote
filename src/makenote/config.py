@@ -7,6 +7,8 @@ from pathlib import Path
 import click
 import questionary
 
+from makenote.github import GhError, list_subjects
+
 CONFIG_PATH = Path.home() / ".config" / "makenote" / "config.json"
 
 
@@ -23,6 +25,34 @@ def save_config(data: dict) -> None:
     CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
     with CONFIG_PATH.open("w") as f:
         json.dump(data, f, indent=2)
+
+
+def _offer_import_subjects(data: dict) -> None:
+    """Offer to import subjects found in the remote repo that aren't local yet."""
+    try:
+        remote_subjects = list_subjects(data["repo"])
+    except GhError as e:
+        click.echo(f"Warning: could not fetch remote subjects: {e}")
+        return
+
+    new_subjects = [s for s in remote_subjects if s not in data["subjects"]]
+    if not new_subjects:
+        return
+
+    subject_list = ", ".join(new_subjects)
+    answer = questionary.select(
+        f"Found {len(new_subjects)} subject(s) in remote repo: {subject_list}. Import all?",
+        choices=["Yes", "No"],
+    ).ask()
+    if answer is None:
+        return
+    confirmed = answer == "Yes"
+
+    if not confirmed:
+        return
+
+    data["subjects"].extend(new_subjects)
+    click.echo(f"Imported {len(new_subjects)} subject(s).")
 
 
 def run_config_flow(existing: dict | None = None) -> None:
@@ -55,6 +85,7 @@ def run_config_flow(existing: dict | None = None) -> None:
             if repo is None:
                 sys.exit(0)
             data["repo"] = repo.strip()
+            _offer_import_subjects(data)
 
         elif action == "Set default subject":
             if not data["subjects"]:
