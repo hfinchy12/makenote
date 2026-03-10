@@ -83,11 +83,18 @@ def default_note(note_text: str | None) -> None:
 
 
 @main.command(name="list")
-def list_notes() -> None:
+@click.option("--subject", "-s", default=None, help="Filter notes to a single subject.")
+def list_notes(subject: str | None) -> None:
     """Print recent notes across all subjects."""
     cfg = _cfg.load_config()
+    subjects = cfg.get("subjects", [])
+    if subject is not None:
+        if subject not in subjects:
+            click.echo(f"Error: unknown subject '{subject}'. Run mn config to manage subjects.")
+            sys.exit(1)
+        subjects = [subject]
     try:
-        records = _gh.read_notes(cfg["repo"], cfg.get("subjects", []))
+        records = _gh.read_notes(cfg["repo"], subjects)
     except _gh.GhNotInstalledError:
         click.echo("Error: gh CLI not found. Install from https://cli.github.com")
         sys.exit(1)

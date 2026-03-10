@@ -84,6 +84,13 @@ mn list
 
 Shows the 20 most recent notes across all subjects, sorted newest first.
 
+To filter by a specific subject:
+
+```bash
+mn list --subject work
+mn list -s ideas
+```
+
 ### Edit config
 
 ```bash
