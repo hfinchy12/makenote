@@ -15,6 +15,10 @@ env/
 .coverage
 htmlcov/
 
+# Claude Code / GSD tooling
+.claude/
+.planning/
+
 # Misc
 .DS_Store
 *.log
