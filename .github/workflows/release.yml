@@ -15,6 +15,10 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
 
+      - name: Configure git remote with token
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.RELEASE_TOKEN }}@github.com/hfinchy12/make-note.git
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
