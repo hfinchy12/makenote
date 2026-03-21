@@ -30,7 +30,13 @@ brew install makenote
 ### pip
 
 ```bash
-pip install makenote
+pip install makenote-cli
+```
+
+Or, using pipx (recommended for CLI tools):
+
+```bash
+pipx install makenote-cli
 ```
 
 ## Setup
