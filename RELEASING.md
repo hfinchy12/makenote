@@ -24,7 +24,7 @@
 
 4. Wait ~30 seconds for GitHub to make the tarball available, then compute the SHA256:
    ```bash
-   curl -sL "https://github.com/hfinchy12/make-note/archive/refs/tags/vX.Y.Z.tar.gz" \
+   curl -sL "https://github.com/hfinchy12/makenote/archive/refs/tags/vX.Y.Z.tar.gz" \
      | shasum -a 256 | awk '{ print $1 }'
    ```
 
@@ -83,6 +83,6 @@
 
 ## Formula Location
 
-- **Source of truth:** `Formula/makenote.rb` in this repo (make-note)
+- **Source of truth:** `Formula/makenote.rb` in this repo (makenote)
 - **Published copy:** `Formula/makenote.rb` in `hfinchy12/homebrew-tap`
 - Always update the source-of-truth file first, then copy to the tap repo

@@ -2,10 +2,10 @@ class Makenote < Formula
   include Language::Python::Virtualenv
 
   desc "Fast terminal note logging to GitHub"
-  homepage "https://github.com/hfinchy12/make-note"
-  url "https://github.com/hfinchy12/make-note/archive/refs/tags/v1.0.0.tar.gz"
+  homepage "https://github.com/hfinchy12/makenote"
+  url "https://github.com/hfinchy12/makenote/archive/refs/tags/v1.0.0.tar.gz"
   # PLACEHOLDER — compute real hash at release time:
-  #   curl -sL "https://github.com/hfinchy12/make-note/archive/refs/tags/v0.1.0.tar.gz" \
+  #   curl -sL "https://github.com/hfinchy12/makenote/archive/refs/tags/v0.1.0.tar.gz" \
   #     | shasum -a 256 | awk '{ print $1 }'
   sha256 "caef169323e9d291ac7e8067293ecfe49515a9e0c0ad7e7f2a2fb163db35a971"
   license "MIT"

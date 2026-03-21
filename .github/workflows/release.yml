@@ -17,7 +17,7 @@ jobs:
 
       - name: Configure git remote with token
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.RELEASE_TOKEN }}@github.com/hfinchy12/make-note.git
+          git remote set-url origin https://x-access-token:${{ secrets.RELEASE_TOKEN }}@github.com/hfinchy12/makenote.git
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -43,7 +43,7 @@ jobs:
       - name: Compute SHA256
         id: sha
         run: |
-          SHA=$(curl -sL "https://github.com/hfinchy12/make-note/archive/refs/tags/v${{ github.event.inputs.version }}.tar.gz" \
+          SHA=$(curl -sL "https://github.com/hfinchy12/makenote/archive/refs/tags/v${{ github.event.inputs.version }}.tar.gz" \
             | shasum -a 256 | awk '{ print $1 }')
           echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
 
@@ -52,7 +52,7 @@ jobs:
 
       - name: Update formula url and sha256
         run: |
-          sed -i '' "s|url \".*\"|url \"https://github.com/hfinchy12/make-note/archive/refs/tags/v${{ github.event.inputs.version }}.tar.gz\"|" Formula/makenote.rb
+          sed -i '' "s|url \".*\"|url \"https://github.com/hfinchy12/makenote/archive/refs/tags/v${{ github.event.inputs.version }}.tar.gz\"|" Formula/makenote.rb
           sed -i '' "s|sha256 \".*\"|sha256 \"${{ steps.sha.outputs.sha256 }}\"|" Formula/makenote.rb
 
       - name: Tap and copy formula for resource update
