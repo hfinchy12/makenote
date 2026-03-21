@@ -19,6 +19,7 @@ from makenote.github import (
     ShaConflictError,
     write_note,
     read_notes,
+    _validate_subject,
 )
 
 
@@ -338,3 +339,69 @@ def test_read_notes_404_skipped(monkeypatch):
 
     result = read_notes("owner/repo", ["work", "personal"])
     assert result == [], f"Expected empty list for 404, got {result}"
+
+
+# ---------------------------------------------------------------------------
+# Security: subject validation (path traversal prevention)
+# ---------------------------------------------------------------------------
+
+@pytest.mark.parametrize("subject", [
+    "work",
+    "my-notes",
+    "notes_2024",
+    "ABC",
+    "a1-b2_c3",
+])
+def test_validate_subject_valid(subject):
+    """Valid subject names pass validation without raising."""
+    _validate_subject(subject)  # should not raise
+
+
+@pytest.mark.parametrize("subject", [
+    "work/../admin",
+    "../../etc/passwd",
+    "notes/evil",
+    "sub ject",
+    "subject!",
+    "",
+    ".",
+    "..",
+])
+def test_validate_subject_invalid(subject):
+    """Invalid subject names raise ValueError."""
+    with pytest.raises(ValueError, match="Invalid subject name"):
+        _validate_subject(subject)
+
+
+def test_write_note_rejects_traversal_subject(monkeypatch):
+    """write_note raises ValueError before making any API calls for invalid subjects."""
+    calls = []
+
+    def fake_run(args, capture_output=False, text=False):
+        calls.append(args)
+        return _put_success_result()
+
+    monkeypatch.setattr("subprocess.run", fake_run)
+    monkeypatch.setattr("shutil.which", lambda name: "/usr/local/bin/gh")
+
+    with pytest.raises(ValueError, match="Invalid subject name"):
+        write_note("owner/repo", "work/../admin", "note text")
+
+    assert calls == [], "No subprocess calls should be made for invalid subjects"
+
+
+def test_read_notes_rejects_traversal_subject(monkeypatch):
+    """read_notes raises ValueError before making any API calls for invalid subjects."""
+    calls = []
+
+    def fake_run(args, capture_output=False, text=False):
+        calls.append(args)
+        return _make_result(returncode=0, stdout="{}")
+
+    monkeypatch.setattr("subprocess.run", fake_run)
+    monkeypatch.setattr("shutil.which", lambda name: "/usr/local/bin/gh")
+
+    with pytest.raises(ValueError, match="Invalid subject name"):
+        read_notes("owner/repo", ["../../etc/passwd", "valid"])
+
+    assert calls == [], "No subprocess calls should be made for invalid subjects"

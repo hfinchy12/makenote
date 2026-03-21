@@ -10,6 +10,7 @@ from __future__ import annotations
 import base64
 import datetime
 import json
+import re
 import shutil
 import subprocess
 
@@ -42,8 +43,14 @@ class GhApiError(GhError):
 
 
 # ---------------------------------------------------------------------------
-# Private helper
+# Private helpers
 # ---------------------------------------------------------------------------
+
+def _validate_subject(subject: str) -> None:
+    """Raise ValueError if subject contains characters that could cause path traversal."""
+    if not re.match(r'^[a-zA-Z0-9_-]+$', subject):
+        raise ValueError(f"Invalid subject name: {subject!r}. Only letters, digits, hyphens, and underscores are allowed.")
+
 
 def _run_gh(*args: str) -> subprocess.CompletedProcess:
     """
@@ -102,6 +109,7 @@ def write_note(repo: str, subject: str, note_text: str) -> None:
     if not shutil.which("gh"):
         raise GhNotInstalledError("gh CLI not found. Install from https://cli.github.com")
 
+    _validate_subject(subject)
     path = f"{NOTES_ROOT}/{subject}/notes.jsonl"
     endpoint = f"repos/{repo}/contents/{path}"
 
@@ -214,6 +222,7 @@ def read_notes(repo: str, subjects: list[str]) -> list[dict]:
     records: list[dict] = []
 
     for subject in subjects:
+        _validate_subject(subject)
         path = f"{NOTES_ROOT}/{subject}/notes.jsonl"
         result = subprocess.run(
             ["gh", "api", f"repos/{repo}/contents/{path}"],
