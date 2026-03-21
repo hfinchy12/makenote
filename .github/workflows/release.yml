@@ -37,6 +37,15 @@ jobs:
           git push origin main
           git push origin "v${{ github.event.inputs.version }}"
 
+      - name: Build and publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          pip install build twine
+          python -m build
+          twine upload dist/*
+
       - name: Wait for tarball
         run: sleep 15
 
