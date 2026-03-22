@@ -52,32 +52,6 @@ def _validate_subject(subject: str) -> None:
         raise ValueError(f"Invalid subject name: {subject!r}. Only letters, digits, hyphens, and underscores are allowed.")
 
 
-def _run_gh(*args: str) -> subprocess.CompletedProcess:
-    """
-    Run a gh subcommand.
-
-    Raises GhNotInstalledError if gh is not on PATH.
-    Raises GhNotAuthError on authentication failures.
-    Raises GhApiError on other non-zero exit codes.
-    """
-    if not shutil.which("gh"):
-        raise GhNotInstalledError("gh CLI not found. Install from https://cli.github.com")
-
-    result = subprocess.run(
-        ["gh", *args],
-        capture_output=True,
-        text=True,
-    )
-
-    if result.returncode != 0:
-        stderr = result.stderr.lower()
-        if "not logged in" in stderr or "auth" in stderr or "authentication" in stderr:
-            raise GhNotAuthError("gh not authenticated. Run: gh auth login")
-        raise GhApiError(result.stderr.strip())
-
-    return result
-
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
@@ -244,7 +218,10 @@ def read_notes(repo: str, subjects: list[str]) -> list[dict]:
                 raise GhNotAuthError("gh not authenticated. Run: gh auth login")
             continue  # 404 or other non-auth error — skip this subject silently
 
-        file_data = json.loads(result.stdout)
+        try:
+            file_data = json.loads(result.stdout)
+        except json.JSONDecodeError as e:
+            raise GhApiError(f"Failed to parse GitHub API response: {e}") from e
         content = base64.b64decode(file_data["content"]).decode("utf-8")
 
         for line in content.splitlines():

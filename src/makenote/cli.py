@@ -63,7 +63,10 @@ def config() -> None:
 def default_note(note_text: str | None) -> None:
     """Log a note using the default subject."""
     cfg = _cfg.load_config()
-    subject = cfg["default_subject"]
+    subject = cfg.get("default_subject", "")
+    if not subject:
+        click.echo("Error: no default subject set. Run mn config to set one.")
+        sys.exit(1)
     if note_text is None:
         note_text = questionary.text("Note:").ask()
         if note_text is None:
