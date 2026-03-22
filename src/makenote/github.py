@@ -129,7 +129,10 @@ def write_note(repo: str, subject: str, note_text: str) -> None:
 
     if get_result.returncode == 0:
         # File exists — decode existing content, append new record, capture sha
-        file_data = json.loads(get_result.stdout)
+        try:
+            file_data = json.loads(get_result.stdout)
+        except json.JSONDecodeError as e:
+            raise GhApiError(f"Failed to parse GitHub API response: {e}") from e
         existing_sha: str | None = file_data["sha"]
         existing_content = base64.b64decode(file_data["content"]).decode("utf-8")
         new_content = existing_content.rstrip("\n") + "\n" + new_record + "\n"
@@ -196,7 +199,10 @@ def list_subjects(repo: str) -> list[str]:
         # notes/ directory doesn't exist or other non-auth error
         return []
 
-    entries = json.loads(result.stdout)
+    try:
+        entries = json.loads(result.stdout)
+    except json.JSONDecodeError as e:
+        raise GhApiError(f"Failed to parse GitHub API response: {e}") from e
     return sorted(e["name"] for e in entries if e.get("type") == "dir")
 
 
