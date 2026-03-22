@@ -56,7 +56,7 @@ def _validate_subject(subject: str) -> None:
 # Public API
 # ---------------------------------------------------------------------------
 
-def write_note(repo: str, subject: str, note_text: str) -> None:
+def write_note(repo: str, subject: str, note_text: str, date: str | None = None) -> None:
     """
     Append a note record to the subject's JSONL file in the GitHub repo.
 
@@ -72,6 +72,7 @@ def write_note(repo: str, subject: str, note_text: str) -> None:
         repo: GitHub repo in "owner/repo" format.
         subject: Subject name (used for path and record field).
         note_text: Text of the note to log.
+        date: ISO date string (YYYY-MM-DD) to use for the note. Defaults to today.
 
     Raises:
         GhNotInstalledError: gh CLI binary not on PATH.
@@ -95,8 +96,9 @@ def write_note(repo: str, subject: str, note_text: str) -> None:
     )
 
     # Step 2: Build the new JSONL record
+    note_date = date if date is not None else datetime.date.today().isoformat()
     new_record = json.dumps({
-        "date": datetime.date.today().isoformat(),
+        "date": note_date,
         "subject": subject,
         "note": note_text,
     })

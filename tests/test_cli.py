@@ -98,7 +98,7 @@ def test_mn_interactive(tmp_path, monkeypatch):
 
     # Track write_note calls
     calls = []
-    monkeypatch.setattr("makenote.cli._gh.write_note", lambda repo, subject, note: calls.append((repo, subject, note)))
+    monkeypatch.setattr("makenote.cli._gh.write_note", lambda repo, subject, note, **kw: calls.append((repo, subject, note)))
 
     # questionary.select returns "work", questionary.text returns "my note"
     select_calls = iter(["work"])
@@ -124,7 +124,7 @@ def test_subject_picker_add_new(tmp_path, monkeypatch):
     monkeypatch.setattr("makenote.config.CONFIG_PATH", config_path)
 
     write_note_calls = []
-    monkeypatch.setattr("makenote.cli._gh.write_note", lambda repo, subject, note: write_note_calls.append((repo, subject, note)))
+    monkeypatch.setattr("makenote.cli._gh.write_note", lambda repo, subject, note, **kw: write_note_calls.append((repo, subject, note)))
 
     save_config_calls = []
     original_save = __import__("makenote.config", fromlist=["save_config"]).save_config
@@ -176,7 +176,7 @@ def test_mn_d_prompts(tmp_path, monkeypatch):
     monkeypatch.setattr("makenote.config.CONFIG_PATH", config_path)
 
     calls = []
-    monkeypatch.setattr("makenote.cli._gh.write_note", lambda repo, subject, note: calls.append((repo, subject, note)))
+    monkeypatch.setattr("makenote.cli._gh.write_note", lambda repo, subject, note, **kw: calls.append((repo, subject, note)))
 
     monkeypatch.setattr("makenote.cli.questionary.text", lambda *a, **kw: _MockAsk("my note"))
 
@@ -197,7 +197,7 @@ def test_mn_d_inline(tmp_path, monkeypatch):
     monkeypatch.setattr("makenote.config.CONFIG_PATH", config_path)
 
     calls = []
-    monkeypatch.setattr("makenote.cli._gh.write_note", lambda repo, subject, note: calls.append((repo, subject, note)))
+    monkeypatch.setattr("makenote.cli._gh.write_note", lambda repo, subject, note, **kw: calls.append((repo, subject, note)))
 
     questionary_called = []
     monkeypatch.setattr("makenote.cli.questionary.text", lambda *a, **kw: questionary_called.append(True) or _MockAsk("should not be called"))

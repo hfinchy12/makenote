@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime
 import sys
 
 import click
@@ -9,16 +10,31 @@ import makenote.config as _cfg
 import makenote.github as _gh
 
 
+def _parse_date(value: str) -> str:
+    """Parse and validate a date string. Returns ISO date string or raises click.BadParameter."""
+    if value == "yesterday":
+        return (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
+    try:
+        parsed = datetime.date.fromisoformat(value)
+    except ValueError:
+        raise click.BadParameter(f"invalid date '{value}'. Use YYYY-MM-DD or 'yesterday'.")
+    if parsed > datetime.date.today():
+        raise click.BadParameter(f"date '{value}' cannot be in the future.")
+    return parsed.isoformat()
+
+
 @click.group(invoke_without_command=True)
 @click.version_option(package_name="makenote", prog_name="mn", message="%(prog)s %(version)s")
+@click.option("--date", "-D", default=None, help="Date for the note (YYYY-MM-DD or 'yesterday'). Defaults to today.")
 @click.pass_context
-def main(ctx: click.Context) -> None:
+def main(ctx: click.Context, date: str | None) -> None:
     """mn — fast terminal note logging."""
     if not _cfg.config_exists() and ctx.invoked_subcommand != "config":
         click.echo("No config found. Running first-time setup.")
         _cfg.run_config_flow()
     elif ctx.invoked_subcommand is None:
         # Interactive note flow (mn with no subcommand)
+        note_date = _parse_date(date) if date is not None else None
         cfg = _cfg.load_config()
         subjects = cfg.get("subjects", [])
         if not subjects:
@@ -45,7 +61,7 @@ def main(ctx: click.Context) -> None:
         if note_text is None:
             sys.exit(0)
         try:
-            _gh.write_note(cfg["repo"], subject, note_text)
+            _gh.write_note(cfg["repo"], subject, note_text, date=note_date)
         except _gh.GhNotInstalledError:
             click.echo("Error: gh CLI not found. Install from https://cli.github.com")
             sys.exit(1)
@@ -66,8 +82,10 @@ def config() -> None:
 
 @main.command(name="d")
 @click.argument("note_text", required=False, default=None)
-def default_note(note_text: str | None) -> None:
+@click.option("--date", "-D", default=None, help="Date for the note (YYYY-MM-DD or 'yesterday'). Defaults to today.")
+def default_note(note_text: str | None, date: str | None) -> None:
     """Log a note using the default subject."""
+    note_date = _parse_date(date) if date is not None else None
     cfg = _cfg.load_config()
     subject = cfg.get("default_subject", "")
     if not subject:
@@ -78,7 +96,7 @@ def default_note(note_text: str | None) -> None:
         if note_text is None:
             sys.exit(0)
     try:
-        _gh.write_note(cfg["repo"], subject, note_text)
+        _gh.write_note(cfg["repo"], subject, note_text, date=note_date)
     except _gh.GhNotInstalledError:
         click.echo("Error: gh CLI not found. Install from https://cli.github.com")
         sys.exit(1)
