@@ -82,6 +82,18 @@ Or without an argument to be prompted:
 mn d
 ```
 
+### Backdating notes
+
+Use `--date` (or `-D`) on either `mn` or `mn d` to log a note for a past date:
+
+```bash
+mn d --date yesterday "fixed the login bug"
+mn d --date 2026-03-20 "deployed the new API"
+mn --date yesterday
+```
+
+Accepts `YYYY-MM-DD` or the shortcut `yesterday`. Future dates are rejected.
+
 ### List recent notes
 
 ```bash
