@@ -113,8 +113,13 @@ def run_config_flow(existing: dict | None = None) -> None:
             if not data["subjects"]:
                 click.echo("No subjects configured.")
             else:
-                click.echo("\n".join(data["subjects"]))
-            time.sleep(0.4)
+                default = data.get("default_subject", "")
+                lines = [
+                    f"{s}  (default)" if s == default else s
+                    for s in data["subjects"]
+                ]
+                click.echo("\n".join(lines))
+            time.sleep(1.2)
 
         elif action == "Remove subject":
             if not data["subjects"]:
