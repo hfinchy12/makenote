@@ -8,7 +8,7 @@ from pathlib import Path
 import click
 import questionary
 
-from makenote.github import GhError, list_subjects
+from makenote.github import GhError, _validate_subject, list_subjects
 
 CONFIG_PATH = Path.home() / ".config" / "makenote" / "config.json"
 
@@ -102,11 +102,17 @@ def run_config_flow(existing: dict | None = None) -> None:
             data["default_subject"] = subject
 
         elif action == "Add subject":
-            name = questionary.text("New subject name:").ask()
-            if name is None:
-                sys.exit(0)
-            name = name.strip()
-            if name and name not in data["subjects"]:
+            while True:
+                name = questionary.text("New subject name (letters, digits, hyphens, underscores only):").ask()
+                if name is None:
+                    sys.exit(0)
+                name = name.strip()
+                try:
+                    _validate_subject(name)
+                    break
+                except ValueError as e:
+                    click.echo(f"Error: {e}")
+            if name not in data["subjects"]:
                 data["subjects"].append(name)
 
         elif action == "List subjects":

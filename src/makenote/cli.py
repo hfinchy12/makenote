@@ -24,15 +24,21 @@ def main(ctx: click.Context) -> None:
         if not subjects:
             click.echo("Error: no subjects configured. Run mn config to add subjects.")
             sys.exit(1)
-        choices = ["Add New", questionary.Separator()] + subjects
+        choices = subjects + [questionary.Separator(), "Add New"]
         subject = questionary.select("Subject:", choices=choices).ask()
         if subject is None:
             sys.exit(0)
         if subject == "Add New":
-            subject = questionary.text("New subject name:").ask()
-            if subject is None:
-                sys.exit(0)
-            subject = subject.strip()
+            while True:
+                subject = questionary.text("New subject name (letters, digits, hyphens, underscores only):").ask()
+                if subject is None:
+                    sys.exit(0)
+                subject = subject.strip()
+                try:
+                    _gh._validate_subject(subject)
+                    break
+                except ValueError as e:
+                    click.echo(f"Error: {e}")
             cfg["subjects"].append(subject)
             _cfg.save_config(cfg)
         note_text = questionary.text("Note:").ask()
