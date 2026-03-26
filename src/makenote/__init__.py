@@ -1,2 +1,6 @@
-from importlib.metadata import version
-__version__ = version("makenote")
+from importlib.metadata import version, PackageNotFoundError
+
+try:
+    __version__ = version("makenote")
+except PackageNotFoundError:
+    __version__ = "unknown"
