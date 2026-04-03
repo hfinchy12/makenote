@@ -109,6 +109,70 @@ def default_note(note_text: str | None, date: str | None) -> None:
     click.echo("Note logged.")
 
 
+@main.command(name="cal")
+def calendar_view() -> None:
+    """Interactively browse the past 7 days and log a note for any date."""
+    cfg = _cfg.load_config()
+    subjects = cfg.get("subjects", [])
+    if not subjects:
+        click.echo("Error: no subjects configured. Run mn config to add subjects.")
+        sys.exit(1)
+
+    subject = questionary.select("Subject:", choices=subjects).ask()
+    if subject is None:
+        sys.exit(0)
+
+    today = datetime.date.today()
+    dates = [(today - datetime.timedelta(days=i)).isoformat() for i in range(7)]
+    since = dates[-1]
+
+    try:
+        records = _gh.read_notes(cfg["repo"], [subject], since=since)
+    except _gh.GhNotInstalledError:
+        click.echo("Error: gh CLI not found. Install from https://cli.github.com")
+        sys.exit(1)
+    except _gh.GhNotAuthError:
+        click.echo("Error: gh not authenticated. Run: gh auth login")
+        sys.exit(1)
+
+    by_date: dict[str, list[dict]] = {}
+    for r in records:
+        by_date.setdefault(r["date"], []).append(r)
+
+    choices = []
+    for d in dates:
+        day_notes = by_date.get(d, [])
+        if not day_notes:
+            label = f"{d}  (no notes)"
+        else:
+            first = day_notes[0]["note"]
+            preview = first[:50] + "..." if len(first) > 50 else first
+            extra = f" (+{len(day_notes) - 1} more)" if len(day_notes) > 1 else ""
+            label = f"{d}  {preview}{extra}"
+        choices.append(questionary.Choice(title=label, value=d))
+
+    selected_date = questionary.select("Select a date:", choices=choices).ask()
+    if selected_date is None:
+        sys.exit(0)
+
+    note_text = questionary.text("Note:").ask()
+    if note_text is None:
+        sys.exit(0)
+
+    try:
+        _gh.write_note(cfg["repo"], subject, note_text, date=selected_date)
+    except _gh.GhNotInstalledError:
+        click.echo("Error: gh CLI not found. Install from https://cli.github.com")
+        sys.exit(1)
+    except _gh.GhNotAuthError:
+        click.echo("Error: gh not authenticated. Run: gh auth login")
+        sys.exit(1)
+    except _gh.ShaConflictError:
+        click.echo("Error: write conflict — file may have changed. Try again.")
+        sys.exit(1)
+    click.echo("Note logged.")
+
+
 @main.command(name="list")
 @click.option("--subject", "-s", default=None, help="Filter notes to a single subject.")
 def list_notes(subject: str | None) -> None:

@@ -182,21 +182,24 @@ def list_subjects(repo: str) -> list[str]:
     return sorted(e["name"] for e in entries if e.get("type") == "dir")
 
 
-def read_notes(repo: str, subjects: list[str]) -> list[dict]:
+def read_notes(repo: str, subjects: list[str], since: str | None = None) -> list[dict]:
     """
     Fetch and return recent notes across all given subjects.
 
     For each subject, GETs its notes.jsonl file from GitHub, decodes the
     base64 content, and parses each JSONL line. Missing files (404) are
-    silently skipped. Returns records sorted by date descending, max 20.
+    silently skipped. Returns records sorted by date descending, max 20
+    (cap bypassed when `since` is provided).
 
     Args:
         repo: GitHub repo in "owner/repo" format.
         subjects: List of subject names to fetch notes for.
+        since: Optional ISO date string (YYYY-MM-DD). When provided, only
+            records with date >= since are returned and the 20-record cap
+            is not applied.
 
     Returns:
-        List of note dicts (with date, subject, note keys), newest first,
-        at most 20 records total.
+        List of note dicts (with date, subject, note keys), newest first.
     """
     if not shutil.which("gh"):
         raise GhNotInstalledError("gh CLI not found. Install from https://cli.github.com")
@@ -235,4 +238,7 @@ def read_notes(repo: str, subjects: list[str]) -> list[dict]:
                     # Skip malformed lines
                     pass
 
-    return sorted(records, key=lambda r: r.get("date", ""), reverse=True)[:20]
+    sorted_records = sorted(records, key=lambda r: r.get("date", ""), reverse=True)
+    if since is not None:
+        return [r for r in sorted_records if r.get("date", "") >= since]
+    return sorted_records[:20]
