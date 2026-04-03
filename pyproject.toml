@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "makenote-cli"
-version = "1.1.2"
+version = "1.1.3"
 requires-python = ">=3.9"
 description = "Fast terminal note logging to GitHub"
 readme = "README.md"
